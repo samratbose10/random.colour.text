@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Gradient Background with Bubbles</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        #text {
+            font-size: 3em;
+            font-weight: bold;
+            color: white;
+            z-index: 10;
+        }
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 10s linear infinite;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="text">Samrat Bose</div>
+
+    <script>
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function changeBackground() {
+            const color1 = getRandomColor();
+            const color2 = getRandomColor();
+            document.body.style.backgroundImage = `linear-gradient(to right, ${color1}, ${color2})`;
+        }
+
+        function changeTextColor() {
+            document.getElementById('text').style.color = getRandomColor();
+        }
+
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+            const size = Math.random() * 60 + 20 + 'px';
+            bubble.style.width = size;
+            bubble.style.height = size;
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.style.backgroundColor = getRandomColor();
+            document.body.appendChild(bubble);
+
+            setTimeout(() => {
+                bubble.remove();
+            }, 10000); // Remove bubble after it finishes floating
+        }
+
+        setInterval(changeBackground, 1000);
+        setInterval(changeTextColor, 1000);
+        setInterval(createBubble, 500); // Create a bubble every half second
+    </script>
+</body>
+</html>
